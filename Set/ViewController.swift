@@ -13,6 +13,7 @@ class ViewController: UIViewController {
             scoreLabel.text = "Score: 0"
         }
     }
+    private var settedCards = [Int]()
     @IBOutlet var cardButtons: [UIButton]!
     @IBOutlet weak var scoreLabel: UILabel!
 
@@ -26,12 +27,22 @@ class ViewController: UIViewController {
         }
         initializeCards()
 
-
+        settedCards=[]
     }
     
     @IBAction func Deal3Cards(_ sender: UIButton) {
-        for index in cardButtons.indices{
-            if cardButtons[card.button]
+        for _ in 1...3{
+            var randomNum = cardButtons.count.arc4random
+            while settedCards.contains(randomNum){
+                randomNum=cardButtons.count.arc4random
+            }
+            settedCards.append(randomNum)
+            if let card=game.deck.draw(){
+                cardButtons[randomNum].setAttributedTitle(card.content, for: UIControl.State.normal)
+        }
+    }
+        if settedCards.count == 24{
+            sender.isEnabled=false
         }
     }
     @IBAction func touchCard(_ sender: UIButton) {
@@ -41,12 +52,18 @@ class ViewController: UIViewController {
 
 
     func initializeCards(){
-        let array = game.visibleCards()
-        for index in array{
-            if let card = game.deck.draw(){
-            cardButtons[index].setAttributedTitle(card.content, for: UIControl.State.normal)
+        for _ in 1...12{
+            var randomNum = cardButtons.count.arc4random
+            while settedCards.contains(randomNum){
+                randomNum=cardButtons.count.arc4random
             }
-    }
+            settedCards.append(randomNum)
+        }
+        for index in settedCards{
+            if let card = game.deck.draw(){
+                cardButtons[index].setAttributedTitle(card.content, for: UIControl.State.normal)
+            }
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()

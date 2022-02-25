@@ -24,6 +24,7 @@ class DeckCards{
                 }
             }
         }
+        cards.shuffle()
     }
     func draw()->Card?{
         if cards.count > 0{

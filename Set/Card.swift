@@ -38,7 +38,7 @@ struct Card{
     enum Color:String,CaseIterable{
         case blue="blue"
         case purple="purple"
-        case yellow="yellow"
+        case green="green"
 
         func getColor()->UIColor{
             switch self{
@@ -46,15 +46,15 @@ struct Card{
             return UIColor.blue
             case .purple:
                 return UIColor.purple
-            case .yellow:
-                return UIColor.yellow
+            case .green:
+                return UIColor.green
             }
         }
     }
     enum Fill:Double,CaseIterable{
-    case full = -5
-    case empty = 0
-    case half = 5
+    case half = 10
+    case thin = 2
+    case full = -35
 
         func getFill()->Double{
             return self.rawValue
