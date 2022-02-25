@@ -13,11 +13,11 @@ class ViewController: UIViewController {
             scoreLabel.text = "Score: 0"
         }
     }
-    private var settedCards = [Int]()
-    @IBOutlet var cardButtons: [UIButton]!
-    @IBOutlet weak var scoreLabel: UILabel!
+    private var settedCards = [Int:Card]()
+    @IBOutlet private var cardButtons: [UIButton]!
+    @IBOutlet private weak var scoreLabel: UILabel!
 
-    @IBAction func NewGameButton(_ sender: UIButton) {
+    @IBAction private func NewGameButton(_ sender: UIButton) {
         game=Set()
         let emptyString = ""
         let attributes:[NSAttributedString.Key:Any]=[:]
@@ -25,44 +25,66 @@ class ViewController: UIViewController {
         for index in cardButtons.indices{
             cardButtons[index].setAttributedTitle(emptyNSString, for: UIControl.State.normal)
         }
+        settedCards.removeAll()
         initializeCards()
 
-        settedCards=[]
+
     }
     
-    @IBAction func Deal3Cards(_ sender: UIButton) {
+    @IBAction private func Deal3Cards(_ sender: UIButton) {
+        var randomNum = cardButtons.count.arc4random
         for _ in 1...3{
-            var randomNum = cardButtons.count.arc4random
-            while settedCards.contains(randomNum){
+
+            while settedCards.keys.contains(randomNum){
                 randomNum=cardButtons.count.arc4random
             }
-            settedCards.append(randomNum)
+
             if let card=game.deck.draw(){
+                settedCards[randomNum] = card
                 cardButtons[randomNum].setAttributedTitle(card.content, for: UIControl.State.normal)
         }
     }
         if settedCards.count == 24{
-            sender.isEnabled=false
+            sender.isEnabled = false
         }
     }
-    @IBAction func touchCard(_ sender: UIButton) {
+    @IBAction private func touchCard(_ sender: UIButton) {
+        //aici nu mai exista mvc :( trebuie facut ca la concentration
+        if let cardNumber = cardButtons.index(of:sender){
+            if settedCards.keys.contains(cardNumber){
+            if !settedCards[cardNumber]!.isSelected {
+            settedCards[cardNumber]?.isSelected = true
+        sender.layer.borderWidth = 3.0
+        sender.layer.borderColor = UIColor.blue.cgColor
+            }
+            else{
+                settedCards[cardNumber]?.isSelected = false
+                sender.layer.borderWidth=0
+            }
+            }
+
+        }
 
     }
 
 
 
-    func initializeCards(){
+    private func initializeCards(){
+        for index in 0...23{
+            cardButtons[index].titleLabel?.font = .systemFont(ofSize: 12)
+        }
         for _ in 1...12{
             var randomNum = cardButtons.count.arc4random
-            while settedCards.contains(randomNum){
+
+            while settedCards.keys.contains(randomNum){
                 randomNum=cardButtons.count.arc4random
             }
-            settedCards.append(randomNum)
-        }
-        for index in settedCards{
+
             if let card = game.deck.draw(){
-                cardButtons[index].setAttributedTitle(card.content, for: UIControl.State.normal)
+                cardButtons[randomNum].setAttributedTitle(card.content, for: UIControl.State.normal)
+                settedCards[randomNum]=card
             }
+
         }
     }
     override func viewDidLoad() {

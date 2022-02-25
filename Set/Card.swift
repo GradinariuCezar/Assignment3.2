@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 struct Card{
-    var isMatched = false
+    var isSelected = false
     var content:NSAttributedString
     var wasSeen = false
     var identifier: Int
@@ -54,7 +54,7 @@ struct Card{
     enum Fill:Double,CaseIterable{
     case half = 10
     case thin = 2
-    case full = -35
+    case full = -40
 
         func getFill()->Double{
             return self.rawValue
