@@ -311,6 +311,7 @@
                         <color key="backgroundColor" systemColor="labelColor"/>
                     </view>
                     <connections>
+                        <outlet property="Deal3Cards" destination="M3G-7U-TSw" id="S0i-q8-QeC"/>
                         <outlet property="scoreLabel" destination="T1e-cw-519" id="wAA-ga-hWv"/>
                         <outletCollection property="cardButtons" destination="f5W-vo-6WK" collectionClass="NSMutableArray" id="nQI-q3-PDI"/>
                         <outletCollection property="cardButtons" destination="0ca-WP-YXe" collectionClass="NSMutableArray" id="BAi-Of-zyC"/>

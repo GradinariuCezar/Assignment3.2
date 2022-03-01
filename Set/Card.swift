@@ -12,6 +12,10 @@ struct Card{
     var content:NSAttributedString
     var wasSeen = false
     var identifier: Int
+    var shape: Shape
+    var fill: Fill
+    var color: Color
+    var noObjects: NoObjects
     private static var identifierFactory = 0
     private static func getUniqueIdentifier() -> Int{
         identifierFactory+=1
@@ -19,31 +23,38 @@ struct Card{
     }
     init(color:Color,fill:Fill,shape:Shape,noObjects:NoObjects){
         var stringObject=""
-        for _ in 1...noObjects.getNoObjects(){
+        for _ in 0...noObjects.getNoObjects(){
             stringObject+=shape.getShape()
         }
        // let font = systemFont(ofSize: CGFloat(6), weight: UIFont.Weight.light)
        // let font = UIFont.preferredFont(forTextStyle: )
-        let attributes:[NSAttributedString.Key:Any]=[
+        var attributes:[NSAttributedString.Key:Any]=[
             .strokeWidth: fill.getFill(),
             .strokeColor: color.getColor()
-
-
         ]
+
+
+        if fill == .full{
+            attributes[NSAttributedString.Key(".backgroundColor")] = color.getColor()
+        }
+        self.shape = shape
+        self.noObjects = noObjects
+        self.fill = fill
+        self.color = color
         let attributedString=NSAttributedString(string: stringObject,attributes: attributes)
         self.content = attributedString
         self.identifier = Card.getUniqueIdentifier()
     }
 
-    enum Color:String,CaseIterable{
-        case blue="blue"
-        case purple="purple"
-        case green="green"
+    enum Color:Int,CaseIterable{
+        case blue=0
+        case purple=1
+        case green=2
 
         func getColor()->UIColor{
             switch self{
             case  .blue:
-            return UIColor.blue
+                return UIColor.blue
             case .purple:
                 return UIColor.purple
             case .green:
@@ -51,33 +62,56 @@ struct Card{
             }
         }
     }
-    enum Fill:Double,CaseIterable{
-    case half = 10
-    case thin = 2
-    case full = -40
+    enum Fill:Int,CaseIterable{
+    case half = 0
+    case thin = 1
+    case full = 2
 
-        func getFill()->Double{
-            return self.rawValue
+        func getFill()->Int{
+            switch self{
+            case  .half:
+            return 10
+            case .thin:
+                return 2
+            case .full:
+                return -40
+            }
         }
+
     }
-    enum Shape:String,CaseIterable{
-        case triangle="▲"
-        case circle="●"
-        case rectangle="■"
+    enum Shape: Int,CaseIterable{
+        case triangle=0
+        case circle=1
+        case rectangle=2
 
         func getShape()->String{
-            return self.rawValue
+            switch self{
+            case  .triangle:
+            return "▲"
+            case .circle:
+                return "●"
+
+            case .rectangle:
+                return "■"
+            }
         }
     }
 
     enum NoObjects:Int,CaseIterable{
-    case one=1
-        case two=2
-        case three=3
+        case one=0
+        case two=1
+        case three=2
 
         func getNoObjects()->Int{
-            return self.rawValue
+            switch self{
+            case  .one:
+            return 0
+            case .two:
+                return 1
+
+            case .three:
+                return 2
+            }
         }
     }
-
 }
