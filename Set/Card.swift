@@ -30,7 +30,9 @@ struct Card{
        // let font = UIFont.preferredFont(forTextStyle: )
         var attributes:[NSAttributedString.Key:Any]=[
             .strokeWidth: fill.getFill(),
+            .foregroundColor: color.getColor().withAlphaComponent(fill.getAlpha()),
             .strokeColor: color.getColor()
+
         ]
 
 
@@ -48,15 +50,15 @@ struct Card{
 
     enum Color:Int,CaseIterable{
         case blue=0
-        case purple=1
+        case red=1
         case green=2
 
         func getColor()->UIColor{
             switch self{
             case  .blue:
                 return UIColor.blue
-            case .purple:
-                return UIColor.purple
+            case .red:
+                return UIColor.red
             case .green:
                 return UIColor.green
             }
@@ -66,11 +68,20 @@ struct Card{
     case half = 0
     case thin = 1
     case full = 2
-
+        func getAlpha()->Double{
+            switch self{
+            case .half:
+                return 0.15
+            case .thin:
+                return 0
+            case .full:
+                return 1
+            }
+        }
         func getFill()->Int{
             switch self{
             case  .half:
-            return 10
+            return 0
             case .thin:
                 return 2
             case .full:
