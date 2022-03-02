@@ -11,6 +11,7 @@ import Foundation
 class Set{
     var cards = [Card]()
     var noCardsSelected = 0
+    var score = 0
     private(set) var deck:DeckCards
 
 
@@ -29,7 +30,7 @@ class Set{
 
             && (cards[0].color.rawValue  + cards[1].color.rawValue  + cards[2].color.rawValue ) % 3 == 0
     }
-    func checkCards(card:Card){
+    func appendSetCard(card:Card){
         print("am ajuns")
         cards.append(card)
         noCardsSelected += 1
@@ -39,6 +40,17 @@ class Set{
 
 
 
+    }
+
+    func removeFromSettedCards(card: Card){
+        for i in cards.indices{
+            if card.content == cards[i].content{
+                print("i:  \(i)")
+                cards.remove(at: i)
+                noCardsSelected -= 1
+                score -= 1
+            }
+        }
     }
     init(){
 

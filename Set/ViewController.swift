@@ -8,6 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
+    var score = 0
     private lazy var game=Set(){
         didSet{
             scoreLabel.text = "Score: 0"
@@ -15,7 +16,7 @@ class ViewController: UIViewController {
     }
 
     @IBOutlet weak var Deal3Cards: UIButton!
-    private var settedCards = [Int:Card]()
+    private var settedCards = [Int:Card]() //cele 12/mai multe carti care sunt afisate
     @IBOutlet private var cardButtons: [UIButton]!
     @IBOutlet private weak var scoreLabel: UILabel!
 
@@ -47,9 +48,12 @@ class ViewController: UIViewController {
             if let card=game.deck.draw(){
                 settedCards[randomNum] = card
                 cardButtons[randomNum].setAttributedTitle(card.content, for: UIControl.State.normal)
+            }
         }
-    }
         if settedCards.count == 24{
+            sender.isEnabled = false
+        }
+        if game.deck.cards.isEmpty{
             sender.isEnabled = false
         }
     }
@@ -64,45 +68,79 @@ class ViewController: UIViewController {
                 cardButtons[index].layer.borderWidth = 0
             }
         }
+
         if let cardNumber = cardButtons.index(of:sender){
             if settedCards.keys.contains(cardNumber){
-            if !settedCards[cardNumber]!.isSelected {
-            settedCards[cardNumber]?.isSelected = true
-        sender.layer.borderWidth = 3.0
-        sender.layer.borderColor = UIColor.blue.cgColor
-                game.checkCards(card: settedCards[cardNumber]!)
-            }
-            else{
-                settedCards[cardNumber]?.isSelected = false
-                sender.layer.borderWidth=0
-            }
+                if !settedCards[cardNumber]!.isSelected {
+                    settedCards[cardNumber]?.isSelected = true
+                    sender.layer.borderWidth = 3.0
+                    sender.layer.borderColor = UIColor.blue.cgColor
+                    game.appendSetCard(card: settedCards[cardNumber]!)
+                }
+                else{
+                    settedCards[cardNumber]?.isSelected = false
+                    game.removeFromSettedCards(card: settedCards[cardNumber]!)
+                    sender.layer.borderWidth=0
+                }
             }
 
         }
 
         if game.noCardsSelected == 3{
-            var isSet = game.compareCards()
+            print(settedCards)
+            let isSet = game.compareCards()
             if isSet{
                 for index in settedCards.keys{
-                    if settedCards[index]!.isSelected{
-                        cardButtons[index].layer.borderColor = UIColor.green.cgColor
-                    }
+                    //le fac verzi
+                    cardButtons[index].layer.borderColor = UIColor.green.cgColor
+
+
                 }
-            }
-                else
-                {
-                    for index in settedCards.keys{
-                        if settedCards[index]!.isSelected{
-                            cardButtons[index].layer.borderColor = UIColor.red.cgColor
+                //pun o pauzica sa vedem verdele
+                _ = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { timer in
+                    //configurez noile valori
+
+                    timer.invalidate()
+                    if self.game.deck.cards.isEmpty{
+                        for index in self.settedCards.keys{
+                            if self.settedCards[index]!.isSelected{
+                                if self.game.deck.cards.isEmpty{
+                                    self.cardButtons[index].isHidden = true
+                                }
+
+                            }
                         }
                     }
+                    else{
+                        for index in self.settedCards.keys{
+                            if self.settedCards[index]!.isSelected {
+                                if let card = self.game.deck.draw(){
+                                    self.settedCards[index] = card
+                                    self.cardButtons[index].setAttributedTitle(card.content, for: UIControl.State.normal)
+                                    self.cardButtons[index].layer.borderWidth=0
+                                }
+                            }
+                        }
+                    }
+                    print("Timer fired!")
                 }
+                score += 3
+            }
+            else
+            {
+                for index in settedCards.keys{
+                    cardButtons[index].layer.borderColor = UIColor.red.cgColor
+
+                }
+                score -= 5
+            }
 
 
             game.cards = []
             game.noCardsSelected = 0
-            }
         }
+        scoreLabel.text = "Score: \(score)"
+    }
 
 
 
@@ -130,14 +168,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeCards()
-//            cardButtons[index].setTitle("\(game.deck.cards[index].content)", for: UIControl.State.normal)
-        }
-        // Do any additional setup after loading the view.
+        //            cardButtons[index].setTitle("\(game.deck.cards[index].content)", for: UIControl.State.normal)
+    }
+    // Do any additional setup after loading the view.
 
 
 }
 
-    
+
 
 
 

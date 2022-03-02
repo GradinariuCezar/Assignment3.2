@@ -74,7 +74,7 @@ struct Card{
             case .thin:
                 return 2
             case .full:
-                return -40
+                return -12
             }
         }
 
