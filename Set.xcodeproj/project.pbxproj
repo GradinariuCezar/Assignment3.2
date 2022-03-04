@@ -16,6 +16,8 @@
 		4141D69827C669C600C7DCD7 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4141D69727C669C600C7DCD7 /* Card.swift */; };
 		4141D69A27C66A4500C7DCD7 /* SetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4141D69927C66A4500C7DCD7 /* SetModel.swift */; };
 		4170A3E327C7ACFA0067B330 /* DeckCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4170A3E227C7ACFA0067B330 /* DeckCards.swift */; };
+		41E2866627D106D5005ADFFE /* GridRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2866527D106D5005ADFFE /* GridRectangle.swift */; };
+		41E2866827D1073D005ADFFE /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2866727D1073D005ADFFE /* Grid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		4141D69727C669C600C7DCD7 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		4141D69927C66A4500C7DCD7 /* SetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetModel.swift; sourceTree = "<group>"; };
 		4170A3E227C7ACFA0067B330 /* DeckCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCards.swift; sourceTree = "<group>"; };
+		41E2866527D106D5005ADFFE /* GridRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridRectangle.swift; sourceTree = "<group>"; };
+		41E2866727D1073D005ADFFE /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,8 @@
 				4141D69727C669C600C7DCD7 /* Card.swift */,
 				4141D69927C66A4500C7DCD7 /* SetModel.swift */,
 				4170A3E227C7ACFA0067B330 /* DeckCards.swift */,
+				41E2866527D106D5005ADFFE /* GridRectangle.swift */,
+				41E2866727D1073D005ADFFE /* Grid.swift */,
 			);
 			path = Set;
 			sourceTree = "<group>";
@@ -150,7 +156,9 @@
 				4170A3E327C7ACFA0067B330 /* DeckCards.swift in Sources */,
 				4141D68827C65B4100C7DCD7 /* ViewController.swift in Sources */,
 				4141D68427C65B4100C7DCD7 /* AppDelegate.swift in Sources */,
+				41E2866827D1073D005ADFFE /* Grid.swift in Sources */,
 				4141D69A27C66A4500C7DCD7 /* SetModel.swift in Sources */,
+				41E2866627D106D5005ADFFE /* GridRectangle.swift in Sources */,
 				4141D68627C65B4100C7DCD7 /* SceneDelegate.swift in Sources */,
 				4141D69827C669C600C7DCD7 /* Card.swift in Sources */,
 			);

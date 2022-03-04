@@ -28,7 +28,7 @@ class DeckCards{
     }
     func draw()->Card?{
         if cards.count > 0{
-            return cards.remove(at: cards.count.arc4random)
+            return cards.remove(at: 0)
         }
         else{
             return nil

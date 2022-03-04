@@ -15,13 +15,17 @@ class ViewController: UIViewController {
         }
     }
 
+    @IBOutlet weak var grid: GridRectangle!
+
+    private var currentNoButtons = 0
     @IBOutlet weak var Deal3Cards: UIButton!
     private var settedCards = [Int:Card]() //cele 12/mai multe carti care sunt afisate
-    @IBOutlet private var cardButtons: [UIButton]!
+    var cardButtons: [UIButton] = []
     @IBOutlet private weak var scoreLabel: UILabel!
 
     @IBAction private func NewGameButton(_ sender: UIButton) {
         game=Set()
+        currentNoButtons = 0
         let emptyString = ""
         let attributes:[NSAttributedString.Key:Any]=[:]
         let emptyNSString = NSAttributedString(string:emptyString,attributes: attributes)
@@ -38,18 +42,18 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func Deal3Cards(_ sender: UIButton) {
-        var randomNum = cardButtons.count.arc4random
+        var aux_buttons = [UIButton]()
         for _ in 1...3{
+                let button = UIButton()
+                cardButtons.append(button)
+                if let card = game.deck.draw(){
+                    button.setAttributedTitle(card.content, for: UIControl.State.normal)
+                    button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectCard(_:))))
+                }
+            aux_buttons.append(button)
 
-            while settedCards.keys.contains(randomNum){
-                randomNum=cardButtons.count.arc4random
-            }
-
-            if let card=game.deck.draw(){
-                settedCards[randomNum] = card
-                cardButtons[randomNum].setAttributedTitle(card.content, for: UIControl.State.normal)
-            }
         }
+        grid.addButtons(buttons: aux_buttons)
         if settedCards.count == 24{
             sender.isEnabled = false
         }
@@ -144,26 +148,35 @@ class ViewController: UIViewController {
 
 
 
+    private var selectedCards: [UIButton]{
+        return cardButtons.filter{
+            $0.
+        }
+    }
+    @objc func selectCard(_ recognizer: UITapGestureRecognizer ){
+        switch recognizer.state{
+        case .ended:
 
-
-
+            if let chosenButton = recognizer.view as? UIButton
+            {
+                chosenButton.layer.borderWidth = 3.0
+                chosenButton.layer.borderColor = UIColor.blue.cgColor
+            }
+                default:
+                    break
+        }
+    }
     private func initializeCards(){
-        for index in 0...23 {
-            cardButtons[index].titleLabel?.font = .systemFont(ofSize: 12)
-        }
         for _ in 1...12 {
-            var randomNum = cardButtons.count.arc4random
-
-            while settedCards.keys.contains(randomNum){
-                randomNum=cardButtons.count.arc4random
-            }
-
+            let button = UIButton()
+            cardButtons.append(button)
+            currentNoButtons += 1
             if let card = game.deck.draw(){
-                cardButtons[randomNum].setAttributedTitle(card.content, for: UIControl.State.normal)
-                settedCards[randomNum]=card
+                button.setAttributedTitle(card.content, for: UIControl.State.normal)
+                button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectCard(_:))))
             }
-
         }
+        grid.addButtons(buttons: cardButtons)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
