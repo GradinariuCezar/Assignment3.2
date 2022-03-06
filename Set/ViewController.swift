@@ -28,15 +28,12 @@ class ViewController: UIViewController {
         let emptyString = ""
         let attributes:[NSAttributedString.Key:Any]=[:]
         let emptyNSString = NSAttributedString(string:emptyString,attributes: attributes)
-        for index in setCards.indices{
+        for _ in setCards.indices{
         }
         setCards = []
         grid.resetButtons()
         initializeCards()
         Deal3Cards.isEnabled = true
-
-
-
     }
     
     @IBAction private func Deal3Cards(_ sender: UIButton) {
@@ -50,9 +47,6 @@ class ViewController: UIViewController {
 
                 }
         grid.addButtons(aux_buttons)
-
-
-        
     }
 //    private var selectedCards: [UIButton]{
 //
