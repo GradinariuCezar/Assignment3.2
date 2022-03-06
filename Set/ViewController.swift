@@ -52,6 +52,7 @@ class ViewController: UIViewController {
         grid.addButtons(aux_buttons)
 
 
+        
     }
 //    private var selectedCards: [UIButton]{
 //
