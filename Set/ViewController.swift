@@ -30,7 +30,8 @@ class ViewController: UIViewController {
         let emptyNSString = NSAttributedString(string:emptyString,attributes: attributes)
         for index in setCards.indices{
         }
-
+        setCards = []
+        grid.resetButtons()
         initializeCards()
         Deal3Cards.isEnabled = true
 
@@ -39,12 +40,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func Deal3Cards(_ sender: UIButton) {
-        var aux_buttons = [UIButton]()
+        var aux_buttons = [SetCard]()
         for _ in 1...3{
-                let card = SetCard()
-            card.createCard(game.deck.draw())
-                setCards.append(card)
+            let setCard = SetCard()
+            setCard.createCard(game.deck.draw())
+                setCard.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectCard(_:))))
+            setCards.append(setCard)
+            aux_buttons.append(setCard)
+
                 }
+        grid.addButtons(aux_buttons)
 
 
     }
@@ -75,7 +80,7 @@ class ViewController: UIViewController {
             print(setCards.count)
         }
         print(setCards.count)
-        var grid2 = Grid(layout: Grid.Layout.dimensions(rowCount: 4, columnCount: 3),frame: grid.bounds)
+        var grid2 = Grid(layout: Grid.Layout.dimensions(rowCount: setCards.count, columnCount: 3),frame: grid.bounds)
         for i in 0..<setCards.count{
             let aux_button = setCards[i]
             aux_button.frame = grid2[i]!

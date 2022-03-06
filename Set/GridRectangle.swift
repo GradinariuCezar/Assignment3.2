@@ -15,6 +15,13 @@ class GridRectangle: UIView {
             addSubview(buttons[i])
             }
         }
+    func resetButtons(){
+        for button in buttons{
+            button.removeFromSuperview()
+        }
+        buttons = []
+
+    }
     lazy var grid = Grid(layout: Grid.Layout.aspectRatio(CGFloat(1)),frame: bounds)
     override func layoutSubviews() {// cand se schimba bounds?
         super.layoutSubviews()
